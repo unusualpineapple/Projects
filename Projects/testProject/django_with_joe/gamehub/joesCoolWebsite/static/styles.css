@@ -1,0 +1,36 @@
+
+
+.grid{
+    width: 40%;
+    height: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    /* border: 4px turquoise groove; */
+}
+
+.square{
+    width: 33%;
+    height: 33%;
+    border:solid black 0.5px;
+}
+
+.mole {
+    background-color: blue;
+}
+
+.return{
+
+    text-decoration: none;
+    color: red;
+    border: 2px black groove;
+}
+
+.return:visited {
+    text-decoration: none;
+    color: red;
+}
+
+.container{
+    width: 100vw;
+    height: 100vh;
+}

@@ -15,7 +15,7 @@ class Games(models.Model):
     updateddat = models.DateTimeField(auto_now=True)
 
 class Scores(models.Model):
-    games_id = models.ForeignKey(Games, on_delete=models.CASCADE)
-    users_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    games_id = models.ForeignKey(Games, on_delete=models.CASCADE, related_name = 'gamescores')
+    users_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='userscores')
     score = models.IntegerField()
     timestamp = models.DateTimeField(auto_now=True)

@@ -1,6 +1,9 @@
+from cProfile import run
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import *
+import pygame
+from subprocess import PIPE, run
 
 # Create your views here.
 
@@ -74,3 +77,20 @@ def create_user(request):
     request.session['id'] = user.id
 
     return redirect("/")
+
+def gamepage (request):
+    return render(request,"gamepage.html")
+
+def playgame (request):
+    return render(request, "rungame.html")
+
+
+def my_game(request):
+    command = ['sudo', 'python test_data.py']
+    result = run(command, stdout=PIPE, stderr=PIPE, shell=True, universal_newlines=True)
+    return render(request, 'mygame.py',{'data1':result})
+
+# def grabscore(request):
+
+
+#try AJAX from html page 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles.css" type="text/css">
+    <title>Whack that MOLEEEEE</title>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <a href='/gamepage' class="return">go back to pick a new game :D</a>
+        <a href="/highscores" class="return">check out the highscores in this game</a>
+    </header>
+    
+    <h2>SCORE:</h2>
+    <h2 id="score">0</h2>
+    
+    <h2>Time left:</h2>
+
+    <h2 id="timeLeft">60</h2>
+        <p class="timesup"></p>
+    <button class="start" onclick="StartGame()">click to start</button>
+    <form action="/playgame">
+        <button class="res">click to restart</button>
+    </form>
+
+        <div class="grid">
+            <div class="square" id="1"></div>
+            <div class="square" id="2"></div>
+            <div class="square" id="3"></div>
+            <div class="square" id="4"></div>
+            <div class="square" id="5"></div>
+            <div class="square" id="6"></div>
+            <div class="square" id="7"></div>
+            <div class="square" id="8"></div>
+            <div class="square" id="9"></div>
+        </div>
+    
+        
+    </div>
+    
+    <script src="../static/app.js"></script>
+</body>
+</html>
