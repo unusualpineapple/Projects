@@ -19,3 +19,9 @@ class Scores(models.Model):
     users_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='userscores')
     score = models.IntegerField()
     timestamp = models.DateTimeField(auto_now=True)
+
+class ScoresViewModel():
+    gameName: str
+    userName: str
+    score: int
+    timestamp: str

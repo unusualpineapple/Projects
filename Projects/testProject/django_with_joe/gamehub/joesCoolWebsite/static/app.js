@@ -42,14 +42,14 @@ function moveMole(){
 
 
 function countDown() {
-    currentTime--
-    time.textContent = currentTime
-    
     if (Math.floor(currentTime) === 0){
         clearInterval(countDownTimerId)
         clearInterval(timerId)
         alert('GAME OVER your score is ' + result)
     }
+    currentTime--
+    time.textContent = currentTime
+    
 }
 // let countDownTimerId = setInterval()
 
