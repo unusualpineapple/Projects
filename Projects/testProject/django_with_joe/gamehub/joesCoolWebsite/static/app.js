@@ -45,11 +45,11 @@ function countDown() {
     if (Math.floor(currentTime) === 0){
         clearInterval(countDownTimerId)
         clearInterval(timerId)
-        alert('GAME OVER your score is ' + result)
     }
     currentTime--
     time.textContent = currentTime
     
+    alert('GAME OVER your score is ' + result)
 }
 // let countDownTimerId = setInterval()
 

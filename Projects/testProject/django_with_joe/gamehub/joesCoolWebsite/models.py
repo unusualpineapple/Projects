@@ -13,7 +13,7 @@ class Userval(models.Manager):
             errors['password'] = "come on thats all you want for a password make it longer"
         if (postData['confirmpass']) == postData['password']:
             errors['confirmpass'] = "you didnt type the same password lets try again"
-        if not REGEX.match(postdata['email']):
+        if not REGEX.match(postData['email']):
             errors['email'] = "invalid email bub"
         return errors
 # Create your models here.
