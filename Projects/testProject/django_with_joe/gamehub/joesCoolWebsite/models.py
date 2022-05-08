@@ -1,5 +1,21 @@
 from django.db import models
+import re
+class Userval(models.Manager):
+    def validation(self, postData):
+        errors = {}
+        REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
+        if len(postData['firstName']) <5 :
+            errors['firstName'] = "must have a valid name"
+        if len(postData['lastName']) <5 : 
+            errors['lastName'] = "lets try again for that last name"
+        if len(postData['password']) <3 :
+            errors['password'] = "come on thats all you want for a password make it longer"
+        if (postData['confirmpass']) == postData['password']:
+            errors['confirmpass'] = "you didnt type the same password lets try again"
+        if not REGEX.match(postdata['email']):
+            errors['email'] = "invalid email bub"
+        return errors
 # Create your models here.
 class Users(models.Model):
     email = models.CharField(max_length=225)
@@ -8,6 +24,8 @@ class Users(models.Model):
     lastName = models.CharField(max_length=225)
     createdat = models.DateTimeField(auto_now_add=True)
     updateddat = models.DateTimeField(auto_now=True)
+    objects = Userval()
+
 
 class Games(models.Model):
     name = models.CharField(max_length=225)
