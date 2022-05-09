@@ -84,8 +84,12 @@ def create_user(request):
 def gamepage (request):
     return render(request,"gamepage.html", {'games' : Games.objects.all()})
 
-def playgame (request, id):
-    return render(request, "rungame.html", )
+def playgame (request, game_id):
+    context = {
+        'this_game_id' : Games.objects.get(id = game_id),
+        'all' : Scores.objects.all()
+    }
+    return render(request, "rungame.html", context)
 
 
 def my_game(request):

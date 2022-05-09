@@ -10,5 +10,5 @@ urlpatterns = [
     path('create_user', views.create_user),
     path('highscores', views.highscores),
     path('gamepage', views.gamepage),
-    path('playgame/<int:id>', views.playgame),
+    path('playgame/<int:game_id>', views.playgame),
 ]

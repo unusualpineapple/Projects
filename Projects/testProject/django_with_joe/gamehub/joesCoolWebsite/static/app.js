@@ -89,13 +89,14 @@ function StartGame() {
 
 function Restart(){
     console.log("Printed")
-    if (currentTime == 0){
-        clearInterval(countDownTimerId)
-        clearInterval(timerId)
-    console.log(timerId)
+    // if (currentTime == 0){
+    //     clearInterval(countDownTimerId)
+    //     clearInterval(timerId)
+    document.getElementById('score').innerHTML = 0
+    // console.log(timerId)
+    button.addEventListener('start',startGame)
     }
-}
-button.addEventListener('start',startGame)
+// }
 
 function EndGame(){
     console.log("hey this is good")

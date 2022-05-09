@@ -38,14 +38,15 @@
     <h2 id="timeLeft">5</h2>
         <p class="timesup"></p>
     <button class="start" onclick="StartGame()">click to start</button>
-    <form action="/playgame">
-        <button class="res">click to restart</button>
-    </form>
+    
+    
+    <a href="/playgame/{{this_game_id.id}}">restart page</a>
+    
     <div>
         <form action="subscore" method = "post">
             <input type="hidden" name="gameName">
 
-            <label for="user">user name</label>
+            <label for="user">name</label>
             <input type="text" name="user" value="{{user.name}}" readonly>
             <script class="hiddenscore">
                 document.getElementById("score").innerHTML
