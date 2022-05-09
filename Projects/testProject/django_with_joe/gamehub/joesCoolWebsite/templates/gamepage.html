@@ -1,3 +1,6 @@
 <p>lets test if we can get something on the page</p>
 
-<a href="/playgame">click to play Whack A Mole</a>
+
+{% for game in games %}
+<a href="/playgame/{{game.id}}">click to play {{game.name}}</a>
+{% endfor %}

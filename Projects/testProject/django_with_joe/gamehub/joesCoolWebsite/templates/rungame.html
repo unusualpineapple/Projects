@@ -4,8 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/styles.css" type="text/css">
+    <link rel="stylesheet" href="../static/styles.css"  type="text/css">
+    <script type="text/js">
+        function getVal(){
+            var thescore = document.getElementById('scoreform').innerHTMLW
+            thescore=document.getElementId('score').innerHTML
+            return thescore;
+        }
+    </script>
+    {%load static%}
     <title>Whack that MOLEEEEE</title>
+    
 </head>
 <body>
 
@@ -26,14 +35,25 @@
     
     <h2>Time left:</h2>
 
-    <h2 id="timeLeft">60</h2>
+    <h2 id="timeLeft">5</h2>
         <p class="timesup"></p>
     <button class="start" onclick="StartGame()">click to start</button>
     <form action="/playgame">
         <button class="res">click to restart</button>
     </form>
     <div>
-        <form action=""></form>
+        <form action="subscore" method = "post">
+            <input type="hidden" name="gameName">
+
+            <label for="user">user name</label>
+            <input type="text" name="user" value="{{user.name}}" readonly>
+            <script class="hiddenscore">
+                document.getElementById("score").innerHTML
+            </script>
+            <label for="result"> <script>document.write({thescore})</script> </label>
+            <input type="text" name="score" id="scoreform" value="#score">
+            <input type="submit" name="score" >
+        </form>
     </div>
 
         <div class="grid">
@@ -51,6 +71,6 @@
         
     </div>
     
-    <script src="../static/app.js"></script>
+    <script src="{%static 'app.js'%}"></script>
 </body>
 </html>

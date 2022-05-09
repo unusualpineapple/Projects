@@ -82,16 +82,19 @@ def create_user(request):
         return redirect("/login")
 
 def gamepage (request):
-    return render(request,"gamepage.html")
+    return render(request,"gamepage.html", {'games' : Games.objects.all()})
 
-def playgame (request):
-    return render(request, "rungame.html")
+def playgame (request, id):
+    return render(request, "rungame.html", )
 
 
 def my_game(request):
     command = ['sudo', 'python test_data.py']
     result = run(command, stdout=PIPE, stderr=PIPE, shell=True, universal_newlines=True)
     return render(request, 'mygame.py',{'data1':result})
+
+# def grabGame(request):
+#     games = Games.objects.all()
 
 def highscores(request):
     id = request.session['id']#request.GET['userid']
@@ -128,3 +131,16 @@ def addFavorite(request):
     if (request.method == "POST"):
         return Games.name.append.favgame(request, "index", favgame)
     
+
+def subscore(request):
+    if(request.method == "GET"):
+        return render(request, "rungame.html")
+    if (request.method == "POST"):
+        return render ("highscores.html", Scores)
+    
+def insertscore(request):
+    formgames_id = request.POST['games_id']
+    formusers_id = request.session['users_id']
+    formScore = request.POST['score']
+    score = Scores.objects.create(gameid = formgames_id, userid = formusers_id, score = formScore)
+    return redirect('highscores')

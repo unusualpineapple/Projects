@@ -4,10 +4,12 @@ const time = document.querySelector('#timeLeft')
 const score = document.querySelector('#score')
 const button = document.querySelector('.start')
 
+
 let result = 0
 let hitPosition
 let currentTime = 10
 let timerId = null
+let countDownTimerId
 
 var startGame = document.getElementById(startGame);
 
@@ -40,26 +42,48 @@ function moveMole(){
 }
 
 
+// function countDown(){
+//     currentTime--
+//     tim
+// }
 
-function countDown() {
-    if (Math.floor(currentTime) === 0){
-        clearInterval(countDownTimerId)
-        clearInterval(timerId)
-    }
-    currentTime--
-    time.textContent = currentTime
-    
-    alert('GAME OVER your score is ' + result)
-}
-// let countDownTimerId = setInterval()
+
+// function countDown(timer) {
+    // if (timer <= 0) {
+    //     clearInterval(countDownTimerId);
+    //     clearInterval(timer);
+    //     return
+    // }
+//     timer--
+// }
+
 
 function StartGame() {
+    console.log("this is the timeinner" + time.innerHTML)
     console.log("beginning function")
-    if (currentTime == 10){
+    let count = time.innerHTML
+    if (count > 0){
         moveMole()
-        countDownTimerId = setInterval(countDown, 1000)
-        console.log("end function")
+        countDownTimerId = setInterval(function(){
+            count--;
+            time.innerHTML--;
+            if (count == 0){
+                clearInterval(countDownTimerId)
+                clearInterval(timerId)
+                return
+            } 
+        }, 1000)
+
+        console.log(count)
+
+
+    
+    if (count === 0){
+        clearInterval(countDownTimerId)
+        clearInterval(time.innerHTML)
     }
+    }
+    console.log("this is ther html" + time.innerHTML)
     }
 
 
@@ -75,8 +99,7 @@ button.addEventListener('start',startGame)
 
 function EndGame(){
     console.log("hey this is good")
-    if (currentTime == 0){
-        
-    }
+    clearInterval
 }
 // sessionStorage.removeItem('mole')
+
