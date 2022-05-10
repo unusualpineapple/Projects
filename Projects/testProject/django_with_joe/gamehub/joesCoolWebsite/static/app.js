@@ -104,3 +104,14 @@ function EndGame(){
 }
 // sessionStorage.removeItem('mole')
 
+var data = {
+    'gamescore':{
+        "score" : result
+    }
+}
+
+console.log(typeof(data))
+console.log(Array.isArray(data))
+console.log(Array.isArray(data.gamescore))
+
+console.log(data[gamescore][0].score)

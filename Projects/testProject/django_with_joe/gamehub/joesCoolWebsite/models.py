@@ -32,14 +32,19 @@ class Games(models.Model):
     createdat = models.DateTimeField(auto_now_add=True)
     updateddat = models.DateTimeField(auto_now=True)
 
+
 class Scores(models.Model):
     games_id = models.ForeignKey(Games, on_delete=models.CASCADE, related_name = 'gamescores')
     users_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='userscores')
-    score = models.IntegerField()
+    scores = models.IntegerField()
     timestamp = models.DateTimeField(auto_now=True)
+class Usersfavgames(models.Model):
+    users_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    game_id = models.ForeignKey(Games, on_delete=models.CASCADE)
 
 class ScoresViewModel():
     gameName: str
     userName: str
     score: int
     timestamp: str
+

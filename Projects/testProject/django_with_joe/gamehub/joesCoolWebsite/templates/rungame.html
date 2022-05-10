@@ -21,6 +21,7 @@
 <div class="container">
 
     <header>
+        {{user.firstName}}
         <a href='/gamepage' class="return">go back to pick a new game :D</a>
         <a href="/highscores" class="return">check out the highscores in this game</a>
     </header>
@@ -28,18 +29,18 @@
 
 
 
-    <input type="hidden" name="gameName">
-    <h2>SCORE:</h2>
-    <h2 id="score">0</h2>
-
-    
-    <h2>Time left:</h2>
-
-    <h2 id="timeLeft">5</h2>
-        <p class="timesup"></p>
-    <button class="start" onclick="StartGame()">click to start</button>
-    
-    
+    <form action="">
+        <input type="hidden" name="gameName">
+        <h2>SCORE:</h2>
+        <h2 id="score">0</h2>
+        
+        <h2>Time left:</h2>
+        <h2 id="timeLeft">5</h2>
+            <p class="timesup"></p>
+        <button class="start" onclick="StartGame()">click to start</button>
+        
+        
+    </form>
     <a href="/playgame/{{this_game_id.id}}">restart page</a>
     
     <div>
@@ -47,12 +48,12 @@
             <input type="hidden" name="gameName">
 
             <label for="user">name</label>
-            <input type="text" name="user" value="{{user.name}}" readonly>
+            <input type="text" name="user" value="{{user.firstName}}" readonly>
             <script class="hiddenscore">
                 document.getElementById("score").innerHTML
             </script>
             <label for="result"> <script>document.write({thescore})</script> </label>
-            <input type="text" name="score" id="scoreform" value="#score">
+            <input type="text" name="score" id="scoreform" value='{#score}' readonly>
             <input type="submit" name="score" >
         </form>
     </div>

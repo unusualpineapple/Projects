@@ -7,22 +7,15 @@ import pygame
 from subprocess import PIPE, run
 from django.contrib import messages
 
+
 # Create your views here.
 def index(request):
-    # print(request.GET)
-    
-    id = request.session['id']
-    #request.GET['userid']
-    # print(queryID)
-    user = Users.objects.get(id=id)
-    # print(user)
+
+    userlog = Users.objects.filter(id = request.session['id'])
     context = {
-        "id":user.id,
-        "User": user,
-        "favorite_color": "red",
-        "pets": ["tonail", "gabe", "Sir Squash"],
-        "FirstName": user.firstName
+        'user' : userlog[0]
     }
+    
     return render(request, "index.html", context)
 
         #return HttpResponse("this is the equivalent of @app.routes('/')")
@@ -38,22 +31,22 @@ def login(request):
 def attemptLogin(request):
     if request.method == "POST":
         formEmail = request.POST['email']
-        formPassword = request.POST['password']
+        # formPassword = request.POST['password']
+
         user = Users.objects.get(email=formEmail)
+
+
         # if bcrypt.checkpw(request.POST['passwordlogin'].encode(), 
         #     logged_user.password.encode())
-
-        print("-------------------------------")
-        print(user)
-        print("-------------------------------")
-
         if(user == None):
             print("Login failed")
             return render(request, "login.html")
         print (user.id)
         request.session['id'] = user.id
+        
+        # request.session['id']= request.POST['id']
+        # request.session['firstName']= request.POST['firstName']
         return redirect("/login")
-
     return redirect("/")
 
 def logout(request):
@@ -82,14 +75,22 @@ def create_user(request):
         return redirect("/login")
 
 def gamepage (request):
+    if 'id' not in request.session:
+        return redirect("/login")
+    # request.session['id']
     return render(request,"gamepage.html", {'games' : Games.objects.all()})
 
 def playgame (request, game_id):
+
+    userlog = Users.objects.filter(id = request.session['id'])
+
     context = {
         'this_game_id' : Games.objects.get(id = game_id),
-        'all' : Scores.objects.all()
+        'all' : Scores.objects.all(),
+        'user' : userlog[0],
     }
-    return render(request, "rungame.html", context)
+    # {request.session['id']: Users.objects.get(name = firstName)
+    return render (request, "rungame.html", context)
 
 
 def my_game(request):
@@ -101,7 +102,7 @@ def my_game(request):
 #     games = Games.objects.all()
 
 def highscores(request):
-    id = request.session['id']#request.GET['userid']
+    # id = request.session['id']#request.GET['userid']
     # gamesList = Games.objects.all()
     # gamesList.
     # for game in gameList:
@@ -148,3 +149,4 @@ def insertscore(request):
     formScore = request.POST['score']
     score = Scores.objects.create(gameid = formgames_id, userid = formusers_id, score = formScore)
     return redirect('highscores')
+
