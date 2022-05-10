@@ -2,5 +2,5 @@
 
 
 {% for game in games %}
-<a href="/playgame/{{game.id}}">click to play {{game.name}}</a>
+<a href="/playgame/{{game.id}}">click to play {{game.name}} <a href="/addfavgame/{{game.id}}">add to favorites</a></a>
 {% endfor %}

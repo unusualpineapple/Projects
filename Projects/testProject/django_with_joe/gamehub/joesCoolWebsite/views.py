@@ -1,4 +1,5 @@
 from cProfile import run
+from unicodedata import name
 import bcrypt
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, HttpResponse
@@ -13,7 +14,8 @@ from django.contrib import messages
 def index(request):
     userlog = Users.objects.filter(id = request.session['id'])
     context = {
-        'user' : userlog[0]
+        'user' : userlog[0],
+        'favgame': Users.favoritedgames.objects.all()
     }
     return render(request, "index.html", context)
 
@@ -63,10 +65,9 @@ def create_user(request):
         formFirstName = request.POST['firstName']
         formLastName = request.POST['lastName']
         pwhash = bcrypt.hashpw(formPassword.encode(), bcrypt.gensalt()).decode()
-        Users.objects.create(email = formEmail, password = pwhash, firstName = formFirstName, lastName = formLastName)
+        createduser = Users.objects.create(email = formEmail, password = pwhash, firstName = formFirstName, lastName = formLastName)
 
-        user = Users.objects.filter(id = request.session['id'])
-        request.session['id'] = user.id
+        request.session['id'] = createduser.id
         return redirect("/login")
 
 def gamepage (request):
@@ -86,10 +87,10 @@ def playgame (request, game_id):
     return render (request, "rungame.html", context)
 
 
-def my_game(request):
-    command = ['sudo', 'python test_data.py']
-    result = run(command, stdout=PIPE, stderr=PIPE, shell=True, universal_newlines=True)
-    return render(request, 'mygame.py',{'data1':result})
+# def my_game(request):
+#     command = ['sudo', 'python test_data.py']
+#     result = run(command, stdout=PIPE, stderr=PIPE, shell=True, universal_newlines=True)
+#     return render(request, 'mygame.py',{'data1':result})
 
 # def grabGame(request):
 #     games = Games.objects.all()
@@ -122,12 +123,15 @@ def grabScore(request):
         return highscores(request)
 
 
-def addFavorite(request):
-    favgame = []
+def addFavorite(request, game_id):
+
     if (request.method == "GET"):
         return render(request, "gamepage")
     if (request.method == "POST"):
-        return Games.name.append.favgame(request, "index", favgame)
+        user = Users.objects.get(id = request.session['id'])
+        game = Games.objects.get(id = game_id)
+        user.favoritedgames.add(game)
+        return redirect('/gamepage')
     
 
 def subscore(request):
