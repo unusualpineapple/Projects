@@ -29,16 +29,17 @@
 
 
 
-    <form action="">
-        <input type="hidden" name="gameName">
+    <form action="/insertscore">
+        <input type="hidden" name="gameid" value="{{this_game_id.id}}">
+        <input type="hidden" name="userid" value="{{user.id}}">
         <h2>SCORE:</h2>
         <h2 id="score">0</h2>
-        
+        <input type="hidden" name="score" id="score">
         <h2>Time left:</h2>
         <h2 id="timeLeft">5</h2>
             <p class="timesup"></p>
         <button class="start" onclick="StartGame()">click to start</button>
-        
+        <input type="submit" value="submit the score">
         
     </form>
     <a href="/playgame/{{this_game_id.id}}">restart page</a>

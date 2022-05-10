@@ -1,18 +1,19 @@
 from django.db import models
 import re
+
 class Userval(models.Manager):
     def validation(self, postData):
         errors = {}
         REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
-        if len(postData['firstName']) <5 :
+        if len(postData['firstName']) <1 :
             errors['firstName'] = "must have a valid name"
-        if len(postData['lastName']) <5 : 
+        if len(postData['lastName']) <1 : 
             errors['lastName'] = "lets try again for that last name"
         if len(postData['password']) <3 :
             errors['password'] = "come on thats all you want for a password make it longer"
-        if (postData['confirmpass']) == postData['password']:
-            errors['confirmpass'] = "you didnt type the same password lets try again"
+        if (postData['password']) != postData['confirmpass']:
+            errors['password'] = "you didnt type the same password lets try again"
         if not REGEX.match(postData['email']):
             errors['email'] = "invalid email bub"
         return errors

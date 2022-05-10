@@ -1,4 +1,5 @@
 from cProfile import run
+import bcrypt
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, HttpResponse
 from virtualenv import session_via_cli
@@ -10,16 +11,18 @@ from django.contrib import messages
 
 # Create your views here.
 def index(request):
-
     userlog = Users.objects.filter(id = request.session['id'])
     context = {
         'user' : userlog[0]
     }
-    
     return render(request, "index.html", context)
 
-        #return HttpResponse("this is the equivalent of @app.routes('/')")
-        
+def validateLogin(request):
+    user = Users.get.objects.get(email=request.POST['email'])
+    if bcrypt.checkpw(request.POST['passwordlogin'].encode(), user.password.encode()):
+        print("password match")
+    else:
+        print("failed password")
 
 def register(request):
     return render(request, "register.html")
@@ -29,25 +32,16 @@ def login(request):
 
 
 def attemptLogin(request):
-    if request.method == "POST":
-        formEmail = request.POST['email']
-        # formPassword = request.POST['password']
 
-        user = Users.objects.get(email=formEmail)
+    user = Users.objects.filter(email=request.POST['email'])
+    if user:
+        loggedin = user[0]
+        if bcrypt.checkpw(request.POST['password'].encode(),loggedin.password.encode()):
+            request.session['id'] = loggedin.id
+            return redirect('/login')
+    return redirect('/')
 
 
-        # if bcrypt.checkpw(request.POST['passwordlogin'].encode(), 
-        #     logged_user.password.encode())
-        if(user == None):
-            print("Login failed")
-            return render(request, "login.html")
-        print (user.id)
-        request.session['id'] = user.id
-        
-        # request.session['id']= request.POST['id']
-        # request.session['firstName']= request.POST['firstName']
-        return redirect("/login")
-    return redirect("/")
 
 def logout(request):
     del request.session['id']
@@ -63,27 +57,26 @@ def create_user(request):
             messages.error(request,value)
         return redirect('/register')
     else:
-
         formEmail = request.POST['email']
         formPassword = request.POST['password']
         formConfirmpass = request.POST['confirmpass']
         formFirstName = request.POST['firstName']
         formLastName = request.POST['lastName']
-        user = Users.objects.create(email = formEmail, password = formPassword, confirmpass = formConfirmpass, firstName = formFirstName, lastName = formLastName)
-        print(user)
+        pwhash = bcrypt.hashpw(formPassword.encode(), bcrypt.gensalt()).decode()
+        Users.objects.create(email = formEmail, password = pwhash, firstName = formFirstName, lastName = formLastName)
+
+        user = Users.objects.filter(id = request.session['id'])
         request.session['id'] = user.id
         return redirect("/login")
 
 def gamepage (request):
     if 'id' not in request.session:
         return redirect("/login")
-    # request.session['id']
+    # # request.session['id']
     return render(request,"gamepage.html", {'games' : Games.objects.all()})
 
 def playgame (request, game_id):
-
     userlog = Users.objects.filter(id = request.session['id'])
-
     context = {
         'this_game_id' : Games.objects.get(id = game_id),
         'all' : Scores.objects.all(),
