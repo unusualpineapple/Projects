@@ -36,6 +36,11 @@ class Games(models.Model):
     createdat = models.DateTimeField(auto_now_add=True)
     updateddat = models.DateTimeField(auto_now=True)
 
+# class Userval(models.Manager):
+#     def validation(self, postData):
+        
+#         errors = {}
+#         if Scores
 
 class Scores(models.Model):
     games_id = models.ForeignKey(Games, on_delete=models.CASCADE, related_name = 'gamescores')

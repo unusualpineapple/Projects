@@ -1,4 +1,5 @@
 from cProfile import run
+from distutils.log import error
 from unicodedata import name
 import bcrypt
 from django.http import HttpResponse
@@ -105,10 +106,6 @@ def playgame (request, game_id):
 #     games = Games.objects.all()
 
 def highscores(request):
-    # id = request.session['id']#request.GET['userid']
-    # gamesList = Games.objects.all()
-    # gamesList.
-    # for game in gameList:
     scoresList = Scores.objects.all()#.filter(games_id=id)
     print(scoresList)
     scoresViewModelDict = {}
@@ -122,7 +119,8 @@ def highscores(request):
         scoresViewModelDict.setdefault(gameName, []).append(scoreVm)
     for key, value in scoresViewModelDict.items():
         print(key, value)
-    #print(scoresViewModelDict)
+        
+
     return render(request, "highscores.html", {'Model': scoresViewModelDict })
 
 def grabScore(request):
@@ -152,7 +150,13 @@ def insertscore(request):
     formScore = int(request.POST['score'])
     getgame = Games.objects.get(id = formgames_id)
     getuser = Users.objects.get(id = formusers_id)
+    if (formScore == ""):
+        return redirect('/rungame/<int:game_id>')
     Scores.objects.create(games_id = getgame, users_id = getuser, scores = formScore)
     return redirect('/highscores')
 
-# def removefav(request):
+def deleteFavorite(request, game_id):
+    user = Users.objects.get(id = request.session['id'])
+    game = Games.objects.get(id = game_id)
+    user.favoritedgames.remove(game)
+    return redirect('/login')

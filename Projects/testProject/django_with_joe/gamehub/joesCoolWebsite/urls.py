@@ -12,5 +12,6 @@ urlpatterns = [
     path('gamepage', views.gamepage),
     path('playgame/<int:game_id>', views.playgame),
     path('insertscore', views.insertscore),
-    path('addfavgame/<int:game_id>',views.addFavorite)
+    path('addfavgame/<int:game_id>',views.addFavorite),
+    path('deletefavgame/<int:game_id>', views.deleteFavorite),
 ]

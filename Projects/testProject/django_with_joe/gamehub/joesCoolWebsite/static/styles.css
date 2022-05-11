@@ -1,5 +1,5 @@
 
-
+/* this is the styling for wackamole game */
 .grid{
     width: 40%;
     height: 50%;
@@ -34,3 +34,19 @@
     width: 100vw;
     height: 100vh;
 }
+
+/* styling for the highscores */
+.highscorelist{
+    background-color: teal;
+    display: flex;
+    justify-content: space-around;
+}
+.header{
+    display: block !important ;
+    align-items: center;
+}
+.tables{
+    display:flex;
+    flex-wrap: wrap;
+}
+
