@@ -13,9 +13,17 @@ from django.contrib import messages
 # Create your views here.
 def index(request):
     userlog = Users.objects.filter(id = request.session['id'])
+    userlog2 = Users.objects.get(id = request.session['id'])
+    print(userlog2.favoritedgames.all())
+
+    usergames = Games.objects.first()
+    print(usergames.usersthatfav.all())
+
     context = {
         'user' : userlog[0],
-        'favgame': Users.favoritedgames.objects.all()
+        'games' : Games.objects.all(),
+        # 'favgame': Games.usersthatfav.objects.all()
+        'favgame' : userlog2.favoritedgames.all()
     }
     return render(request, "index.html", context)
 
@@ -124,15 +132,11 @@ def grabScore(request):
 
 
 def addFavorite(request, game_id):
+    user = Users.objects.get(id = request.session['id'])
+    game = Games.objects.get(id = game_id)
+    user.favoritedgames.add(game)
+    return redirect('/login')
 
-    if (request.method == "GET"):
-        return render(request, "gamepage")
-    if (request.method == "POST"):
-        user = Users.objects.get(id = request.session['id'])
-        game = Games.objects.get(id = game_id)
-        user.favoritedgames.add(game)
-        return redirect('/gamepage')
-    
 
 def subscore(request):
     if(request.method == "GET"):
@@ -144,6 +148,6 @@ def insertscore(request):
     formgames_id = request.POST['games_id']
     formusers_id = request.session['users_id']
     formScore = request.POST['score']
-    score = Scores.objects.create(gameid = formgames_id, userid = formusers_id, score = formScore)
+    Scores.objects.create(gameid = formgames_id, userid = formusers_id, score = formScore)
     return redirect('highscores')
 

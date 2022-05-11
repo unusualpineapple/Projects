@@ -32,7 +32,7 @@ class Users(models.Model):
 
 class Games(models.Model):
     name = models.CharField(max_length=225)
-    usersthatfav = models.ManyToManyField(Users, related_name= 'favoritedgames')
+    usersthatfav = models.ManyToManyField(Users, related_name= 'favoritedgames', blank = True)
     createdat = models.DateTimeField(auto_now_add=True)
     updateddat = models.DateTimeField(auto_now=True)
 

@@ -1,7 +1,7 @@
 
     <p>test template index</p>
     {{user.firstName}}
-
+    {{user.id}}
     <div><a href="/highscores">Look at Scores</a></div>
     <div><a href="/gamepage">check out the games</a></div>
     <div><a href="/logout">logout</a></div>
@@ -13,8 +13,13 @@
             <td>Fav Games</td>
         </th>
         <tb>
+        {% for game in favgame %}
+            
             <tr>
-                <td><a href="playgame/{{game.id}}">favgame.name</a>favgame.name</td>
+                <td><a href="playgame/{{game.id}}">{{game.name}}</a></td>
             </tr>
+            
+        {% endfor %}
+
         </tb>
     </table>
