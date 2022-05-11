@@ -32,15 +32,14 @@
     <form action="/insertscore" method="post">
         {%csrf_token%}
         <input type="hidden" name="games_id" value="{{this_game_id.id}}">
-        <input type="hidden" name="users_id" value="{{user.id}}">
+        <!-- <input type="hidden" name="user.id" value="{{user.id}}"> -->
         <h2>SCORE:</h2>
         <h2 id="score">0</h2>
-        <input type="hidden" name="score" id="score">
+        <input type="hidden" name="score" id="test" value="">
         <h2>Time left:</h2>
         <h2 id="timeLeft">5</h2>
             <p class="timesup"></p>
             <input type="submit" value="submit the score">
-            
         </form>
         <button class="start" onclick="StartGame()">click to start</button>
     <a href="/playgame/{{this_game_id.id}}">restart game</a>
@@ -52,7 +51,7 @@
             <label for="user">name</label>
             <input type="text" name="user" value="{{user.firstName}}" readonly>
             <script class="hiddenscore">
-                document.getElementById("score").innerHTML
+                <input type="hidden" value="">document.getElementById("score").innerHTML</input>
             </script>
             <label for="result"> <script>document.write({thescore})</script> </label>
             <input type="text" name="score" id="scoreform" value='{#score}' readonly>

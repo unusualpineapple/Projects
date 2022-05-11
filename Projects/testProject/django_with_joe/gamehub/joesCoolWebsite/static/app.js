@@ -5,6 +5,7 @@ const score = document.querySelector('#score')
 const button = document.querySelector('.start')
 
 
+
 let result = 0
 let hitPosition
 let currentTime = 10
@@ -31,6 +32,8 @@ squares.forEach(square => {
         if (square.id == hitPosition) {
             result++
             score.textContent = result
+            var tester = document.querySelector("#test")
+            tester.setAttribute("value", result)
             hitPosition = null
         }
     })

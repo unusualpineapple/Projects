@@ -86,6 +86,7 @@ def gamepage (request):
 
 def playgame (request, game_id):
     userlog = Users.objects.filter(id = request.session['id'])
+    # print 
     context = {
         'this_game_id' : Games.objects.get(id = game_id),
         'all' : Scores.objects.all(),
@@ -116,7 +117,7 @@ def highscores(request):
         scoreVm = ScoresViewModel()
         scoreVm.gameName = gameName
         scoreVm.userName = score.users_id.firstName
-        scoreVm.score = score.score
+        scoreVm.score = score.scores
         scoreVm.timestamp = score.timestamp
         scoresViewModelDict.setdefault(gameName, []).append(scoreVm)
     for key, value in scoresViewModelDict.items():
@@ -144,10 +145,14 @@ def subscore(request):
     if (request.method == "POST"):
         return render ("highscores.html", Scores)
     
-def insertscore(request):
-    formgames_id = request.POST['games_id']
-    formusers_id = request.session['users_id']
-    formScore = request.POST['score']
-    Scores.objects.create(gameid = formgames_id, userid = formusers_id, score = formScore)
-    return redirect('highscores')
 
+def insertscore(request):
+    formgames_id = int(request.POST['games_id'])
+    formusers_id = request.session['id']
+    formScore = int(request.POST['score'])
+    getgame = Games.objects.get(id = formgames_id)
+    getuser = Users.objects.get(id = formusers_id)
+    Scores.objects.create(games_id = getgame, users_id = getuser, scores = formScore)
+    return redirect('/highscores')
+
+# def removefav(request):
