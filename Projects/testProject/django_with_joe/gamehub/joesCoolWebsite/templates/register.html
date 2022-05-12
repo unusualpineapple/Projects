@@ -1,30 +1,44 @@
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-        <li {% if message.tags %} class = "{{message.tags}}"{% endif %}>{{message}}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-
-<form action="/create_user" method="post">
-    {%csrf_token%}
-    <div>
-        Email: <input type="text" name="email">
-    </div>
-    <div>
-        Password: <input type="password" name="password">
-    </div>
-    <div>
-        Confirm Password: <input type="password" name="confirmpass"
-    </div>
-    <div>
-        FirstName: <input type="text" name="firstName">
-    </div>
-    <div>
-        LastName: <input type="text" name="lastName">
-    </div>
-    <div>
-        <input type="submit">
-    </div>
-</form>
-<a href="/">Back to login</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+    <title>Document</title>
+</head>
+<body>
+    
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class = "{{message.tags}}"{% endif %}>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <form action="/create_user" method="post">
+        {%csrf_token%}
+        <div>
+            Email: <input type="text" name="email">
+        </div>
+        <div>
+            Password: <input type="password" name="password">
+        </div>
+        <div>
+            Confirm Password: <input type="password" name="confirmpass"
+        </div>
+        <div>
+            FirstName: <input type="text" name="firstName">
+        </div>
+        <div>
+            LastName: <input type="text" name="lastName">
+        </div>
+        <div>
+            <input type="submit">
+        </div>
+    </form>
+    <a href="/">Back to login</a>
+</body>
+</html>
