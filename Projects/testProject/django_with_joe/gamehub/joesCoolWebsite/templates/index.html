@@ -1,27 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-        <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
-        <title>Document</title>
-    </head>
-<body>
-
-    
-    
-    <p>test template index</p>
-    {{user.firstName}}
-    <div><a href="/highscores">Look at Scores</a></div>
-    <div><a href="/gamepage">check out the games</a></div>
-    <div><a href="/login">dashboard</a></div>
-    <div><a href="/logout">logout</a></div>
-    
-    
-    
+{% extends "base.html" %}
+{% block content %}
     <table>
         <th>
             <td>Fav Games</td>
@@ -38,5 +16,4 @@
     
         </tb>
     </table>
-</body>
-</html>
+{% endblock %}

@@ -4,26 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/styles.css"  type="text/css">
-    <script type="text/js">
-        function getVal(){
-            var thescore = document.getElementById('scoreform').innerHTMLW
-            thescore=document.getElementId('score').innerHTML
-            return thescore;
-        }
-    </script>
     {%load static%}
+    <link rel="stylesheet" href="../static/styles.css"  type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+    
     <title>Whack that MOLEEEEE</title>
     
 </head>
 <body>
-    <header>
-        {{user.firstName}} {{user.lastname}}
-    <div><a href="/highscores">Look at Scores</a></div>
-    <div><a href="/gamepage">check out the games</a></div>
-    <div><a href="/login">dashboard</a></div>
-    <div><a href="/logout">logout</a></div>
-    </header>
 
 <div class="container">
 
@@ -50,21 +39,7 @@
         </form>
         <button class="start" onclick="StartGame()">click to start</button>
     <a href="/playgame/{{this_game_id.id}}">restart game</a>
-    
-    <!-- <div>
-        <form action="subscore" method = "post">
-            <input type="hidden" name="gameName">
 
-            <label for="user">name</label>
-            <input type="text" name="user" value="{{user.firstName}}" readonly>
-            <script class="hiddenscore">
-                <input type="hidden" value="">document.getElementById("score").innerHTML</input>
-            </script>
-            <label for="result"> <script>document.write({thescore})</script> </label>
-            <input type="text" name="score" id="scoreform" value='{#score}' readonly>
-            <input type="submit" name="score" >
-        </form>
-    </div> -->
 
         <div class="grid">
             <div class="square" id="1"></div>

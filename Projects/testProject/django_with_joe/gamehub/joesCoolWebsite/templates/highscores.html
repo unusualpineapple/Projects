@@ -1,24 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
-    <title>Document</title>
-</head>
-    <body>
-        <header>
-            {{name.firstName}} {{user.lastname}}
-    <div><a href="/highscores">Look at Scores</a></div>
-    <div><a href="/gamepage">check out the games</a></div>
-    <div><a href="/login">dashboard</a></div>
-    <div><a href="/logout">logout</a></div>
-        </header>
+{% extends "base.html" %}
+{% block content %}
         <div class="highscorelist">
                 {% for key, value in Model.items%}
             <div class="tables">
@@ -55,5 +36,4 @@
         <div>
             <a href="/login">index</a>
         </div>
-    </body>
-</html>
+{% endblock %}
