@@ -11,8 +11,15 @@
     <title>Document</title>
 </head>
 <body>
-    
-    <form action="/attemptlogin" method="post">
+    <h1>WELCOME TO GAME HUB</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class = "{{message.tags}}"{% endif %}>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/attemptlogin" method="post" class="logsform">
         {%csrf_token%}
         <div>
             Email: <input type="text" name="email">

@@ -1,5 +1,7 @@
+import email
 from django.db import models
 import re
+import bcrypt
 
 class Userval(models.Manager):
     def validation(self, postData):
@@ -19,6 +21,16 @@ class Userval(models.Manager):
         if postData['email'] and Users.objects.filter(email='email').exists():
             errors['email'] = "this email is already in the system!"
         return errors
+    def loginval(self, postData):
+        errors = {}
+        user = Users.objects.filter(email = postData['email'])
+        if len(user) == 0:
+            errors['email'] = "this email is incorrect try again"
+        elif not bcrypt.checkpw(postData['password'].encode(), user[0].password.encode()):
+        # if bcrypt.checkpw(postData['password'].encode() != Users.objects.get(password = 'password').password.encode()):
+            errors['password'] = "password dont match"
+        return errors
+
 # Create your models here.
 class Users(models.Model):
     email = models.CharField(max_length=225)
@@ -28,6 +40,7 @@ class Users(models.Model):
     createdat = models.DateTimeField(auto_now_add=True)
     updateddat = models.DateTimeField(auto_now=True)
     objects = Userval()
+    
 
 
 class Games(models.Model):
@@ -36,12 +49,11 @@ class Games(models.Model):
     createdat = models.DateTimeField(auto_now_add=True)
     updateddat = models.DateTimeField(auto_now=True)
 
-# class Userval(models.Manager):
-#     def validation(self, postData):
-        
-#         errors = {}
-#         if Scores
-
+class Comments(models.Model):
+    games_id = models.ForeignKey(Games, on_delete=models.CASCADE, related_name = 'gamecomments')
+    users_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='usercomments')
+    comment = models.TextField(max_length=225, blank=True)
+    timestamp = models.DateTimeField(auto_now=True)
 class Scores(models.Model):
     games_id = models.ForeignKey(Games, on_delete=models.CASCADE, related_name = 'gamescores')
     users_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='userscores')

@@ -14,4 +14,7 @@ urlpatterns = [
     path('insertscore', views.insertscore),
     path('addfavgame/<int:game_id>',views.addFavorite),
     path('deletefavgame/<int:game_id>', views.deleteFavorite),
+    path('adduserComment', views.addComment),
+    path('deleteComment/<int:comment_id>', views.deleteComment),
+    path('updatecomment/<int:comment_id>', views.updateComment)
 ]

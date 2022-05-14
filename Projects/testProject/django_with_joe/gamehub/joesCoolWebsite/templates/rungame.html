@@ -17,9 +17,11 @@
 <div class="container">
 
     <header>
-        {{user.firstName}}
-        <a href='/gamepage' class="return">go back to pick a new game :D</a>
-        <a href="/highscores" class="return">check out the highscores in this game</a>
+        {{user.firstName}} {{user.lastname}}
+        <div><a href="/highscores">Look at Scores</a></div>
+        <div><a href="/gamepage">check out the games</a></div>
+        <div><a href="/login">dashboard</a></div>
+        <div><a href="/logout">logout</a>
     </header>
     
 

@@ -4,4 +4,12 @@
     {% for game in games %}
     <div><a href="/playgame/{{game.id}}">click to play {{game.name}} <a href="/addfavgame/{{game.id}}">add to favorites</a></a></div>
     {% endfor %}
+
+    <h2>comments</h2>
+    {% for comment in comments %}
+        <p>{{comment.users_id.firstName}}: {{comment.games_id.name}} {{comment.comment}}</p>
+    {% endfor %}
+
+
+
 {% endblock %}

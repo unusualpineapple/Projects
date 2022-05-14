@@ -16,4 +16,30 @@
     
         </tb>
     </table>
+
+    <form action="/adduserComment" method = 'post'>
+        {%csrf_token%}
+        <input type="hidden" value="{{user.id}}" name="users_id">
+        <select name="games_id" >
+            {% for game in games %}
+            <option value="{{game.id}}">{{game.name}}</option>
+            {% endfor %}
+        </select> 
+        <textarea name="comment" cols="15" rows="2"></textarea>
+        <input type="submit" value="add comment">
+    </form>
+
+    <h2>Comments</h2>
+    {% for comment in comments %}
+        {% if user.id == comment.users_id_id %}
+            <p>{{comment.comment}}</p><a href="/deletecomment{{comment_id}}">delete comment</a> <a href="/updatecomment/{{comment_id}}">update comment</a>
+        {% endif %}
+    {% endfor %}
+
+    <form action="/updatecomment/{{comment.id}}" method="post" type="hidden"></form>
+        {%csrf_token%}
+        <input type="hidden" value="{{user.id}}" name="users_id">
+        <textarea name="comment" cols="15" rows="2">{{comment.comment}}</textarea>
+        <input type="submit" value="add comment">
+    </form>
 {% endblock %}

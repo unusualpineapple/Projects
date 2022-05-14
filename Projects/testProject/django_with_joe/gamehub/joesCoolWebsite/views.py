@@ -1,6 +1,8 @@
 from cProfile import run
 from distutils.log import error
+from multiprocessing import context
 from unicodedata import name
+from xml.etree.ElementTree import Comment
 import bcrypt
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, HttpResponse
@@ -11,48 +13,24 @@ from subprocess import PIPE, run
 from django.contrib import messages
 
 
-# Create your views here.
-def index(request):
-    userlog = Users.objects.filter(id = request.session['id'])
-    userlog2 = Users.objects.get(id = request.session['id'])
-    print(userlog2.favoritedgames.all())
-
-    usergames = Games.objects.first()
-    print(usergames.usersthatfav.all())
-
-    context = {
-        'user' : userlog[0],
-        'games' : Games.objects.all(),
-        # 'favgame': Games.usersthatfav.objects.all()
-        'favgame' : userlog2.favoritedgames.all()
-    }
-    return render(request, "index.html", context)
-
-def validateLogin(request):
-    user = Users.get.objects.get(email=request.POST['email'])
-    if bcrypt.checkpw(request.POST['passwordlogin'].encode(), user.password.encode()):
-        print("password match")
-    else:
-        print("failed password")
-
-def register(request):
-    return render(request, "register.html")
 
 def login(request):
     return render(request, "login.html")
 
-
 def attemptLogin(request):
-
-    user = Users.objects.filter(email=request.POST['email'])
-    if user:
-        loggedin = user[0]
-        if bcrypt.checkpw(request.POST['password'].encode(),loggedin.password.encode()):
-            request.session['id'] = loggedin.id
-            return redirect('/login')
-    return redirect('/')
-
-
+    errors = Users.objects.loginval(request.POST)
+    # errors = Users.logs.loginval(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request,value)
+        return redirect('/')
+    # if user:
+    user = Users.objects.get(email = request.POST['email'])
+    loggedin = user
+    #     if bcrypt.checkpw(request.POST['password'].encode(),loggedin.password.encode()):
+    #         return redirect('/login')
+    request.session['id'] = loggedin.id
+    return redirect('/login')
 
 def logout(request):
     del request.session['id']
@@ -79,70 +57,45 @@ def create_user(request):
         request.session['id'] = createduser.id
         return redirect("/login")
 
+# Create your views here.
+def register(request):
+    return render(request, "register.html")
+
+def index(request):
+    userlog2 = Users.objects.get(id = request.session['id'])
+    print(userlog2.favoritedgames.all())
+    usergames = Games.objects.first()
+    print(usergames.usersthatfav.all())
+    context = {
+        'user' : userlog2,
+        'games' : Games.objects.all(),
+        # 'gamenames': Games.objects.get(name ='gamenames'),
+        'favgame' : userlog2.favoritedgames.all(),
+        'comments': Comments.objects.all()
+    }
+    return render(request, "index.html", context)
+
 def gamepage (request):
     if 'id' not in request.session:
         return redirect("/login")
-    # # request.session['id']
-    return render(request,"gamepage.html", {'games' : Games.objects.all()})
+    context = {
+        'comments': Comments.objects.all(),
+        'games' : Games.objects.all(),
+        'users': Users.objects.all(),
+    }
+    return render(request,"gamepage.html", context)
 
 def playgame (request, game_id):
-    userlog = Users.objects.filter(id = request.session['id'])
+    userlog2 = Users.objects.get(id = request.session['id'])
     # print 
     context = {
         'this_game_id' : Games.objects.get(id = game_id),
         'all' : Scores.objects.all(),
-        'user' : userlog[0],
+        'user' : userlog2,
+        
     }
     # {request.session['id']: Users.objects.get(name = firstName)
     return render (request, "rungame.html", context)
-
-
-# def my_game(request):
-#     command = ['sudo', 'python test_data.py']
-#     result = run(command, stdout=PIPE, stderr=PIPE, shell=True, universal_newlines=True)
-#     return render(request, 'mygame.py',{'data1':result})
-
-# def grabGame(request):
-#     games = Games.objects.all()
-
-def highscores(request):
-    scoresList = Scores.objects.all()#.filter(games_id=id)
-    print(scoresList)
-    scoresViewModelDict = {}
-    for score in scoresList:
-        gameName = score.games_id.name
-        scoreVm = ScoresViewModel()
-        scoreVm.gameName = gameName
-        scoreVm.userName = score.users_id.firstName
-        scoreVm.score = score.scores
-        scoreVm.timestamp = score.timestamp
-        scoresViewModelDict.setdefault(gameName, []).append(scoreVm)
-    for key, value in scoresViewModelDict.items():
-        print(key, value)
-        
-
-    return render(request, "highscores.html", {'Model': scoresViewModelDict })
-
-def grabScore(request):
-    if(request.method == "GET"):
-        return render(request, "rungame.html")
-    if(request.method == "POST"):
-        return highscores(request)
-
-
-def addFavorite(request, game_id):
-    user = Users.objects.get(id = request.session['id'])
-    game = Games.objects.get(id = game_id)
-    user.favoritedgames.add(game)
-    return redirect('/login')
-
-
-def subscore(request):
-    if(request.method == "GET"):
-        return render(request, "rungame.html")
-    if (request.method == "POST"):
-        return render ("highscores.html", Scores)
-    
 
 def insertscore(request):
     formgames_id = int(request.POST['games_id'])
@@ -155,8 +108,77 @@ def insertscore(request):
     Scores.objects.create(games_id = getgame, users_id = getuser, scores = formScore)
     return redirect('/highscores')
 
+def grabScore(request):
+    if(request.method == "GET"):
+        return render(request, "rungame.html")
+    if(request.method == "POST"):
+        return highscores(request)
+
+def subscore(request):
+    if(request.method == "GET"):
+        return render(request, "rungame.html")
+    if (request.method == "POST"):
+        return render ("highscores.html", Scores)
+    
+def highscores(request):
+    scoresList = Scores.objects.all().order_by('-scores')
+    listofgames = Games.objects.all()
+    print(scoresList)
+    #sudo coding
+    #i want to loop through all the games
+    scoresViewModelDict = {}
+    for game in listofgames:
+        #listofgames length
+        # scoresViewModelDict[i] = arr[game]
+        gamescorelist = scoresList.filter(games_id = game.id)[:10]
+        for score in gamescorelist:
+            gameName = score.games_id.name
+            scoreVm = ScoresViewModel()
+            scoreVm.gameName = gameName
+            scoreVm.userName = score.users_id.firstName
+            scoreVm.score = score.scores
+            scoreVm.timestamp = score.timestamp
+            scoresViewModelDict.setdefault(gameName, []).append(scoreVm)
+        #pull the game out one by one
+        # return gamescorelist
+    #I want to filter the score list to a single game and limit the resilts to 5
+    for key, value in scoresViewModelDict.items():
+        print(key, value)
+    return render(request, "highscores.html", {'Model': scoresViewModelDict })
+    #add to those 5 scores to the viewmodelDict
+    #return the viewmodeldict
+
+def addFavorite(request, game_id):
+    user = Users.objects.get(id = request.session['id'])
+    game = Games.objects.get(id = game_id)
+    user.favoritedgames.add(game)
+    return redirect('/login')
+
 def deleteFavorite(request, game_id):
     user = Users.objects.get(id = request.session['id'])
     game = Games.objects.get(id = game_id)
     user.favoritedgames.remove(game)
     return redirect('/login')
+
+def addComment(request):
+    user = Users.objects.get(id = request.session['id'])
+    game = Games.objects.get(id = request.POST['games_id'])
+    newuserComment = Comments.objects.create(comment=request.POST['comment'], games_id =game, users_id= user )
+    user.usercomments.add(newuserComment)
+    return redirect('/login')
+
+
+def deleteComment(request):
+    user = Users.objects.get(id = request.session['id'])
+    comment = Comments.objects.get(id = comment.id)
+    user.usercomments.remove(comment)
+    return redirect('/login')
+
+def updatePage(comment_id):
+    updateComment = Comment.objects.get(id = comment_id)
+    updateComment.comment = Comments.objects.get(comment = 'comment')
+    updateComment.save()
+    return redirect("/login")
+
+
+
