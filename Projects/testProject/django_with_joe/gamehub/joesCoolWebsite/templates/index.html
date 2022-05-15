@@ -16,30 +16,49 @@
     
         </tb>
     </table>
-
-    <form action="/adduserComment" method = 'post'>
-        {%csrf_token%}
-        <input type="hidden" value="{{user.id}}" name="users_id">
-        <select name="games_id" >
-            {% for game in games %}
-            <option value="{{game.id}}">{{game.name}}</option>
-            {% endfor %}
-        </select> 
-        <textarea name="comment" cols="15" rows="2"></textarea>
-        <input type="submit" value="add comment">
-    </form>
-
+    
     <h2>Comments</h2>
-    {% for comment in comments %}
-        {% if user.id == comment.users_id_id %}
-            <p>{{comment.comment}}</p><a href="/deletecomment{{comment_id}}">delete comment</a> <a href="/updatecomment/{{comment_id}}">update comment</a>
-        {% endif %}
-    {% endfor %}
-
-    <form action="/updatecomment/{{comment.id}}" method="post" type="hidden"></form>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class = "{{message.tags}}"{% endif %}>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/adduserComment" method = 'post' style="display:flex ">
         {%csrf_token%}
         <input type="hidden" value="{{user.id}}" name="users_id">
-        <textarea name="comment" cols="15" rows="2">{{comment.comment}}</textarea>
-        <input type="submit" value="add comment">
-    </form>
+        <div class="games">
+            <div style="text-align:left ">
+                <label for="games_id">Select a game</label>
+            </div>
+                <select name="games_id" >
+                    {% for game in games %}
+                    <option value="{{game.id}}">{{game.name}}</option>
+                    {% endfor %}
+                </select>
+        </div>
+            <div class="textsub">
+                <div>
+                    <label for="comment">add some comments</label>
+                </div>
+                        <textarea name="comment" cols="15" rows="2"></textarea>
+                        <input type="submit" value="add comment">
+                    </form>
+            </div>
+    {% for comment in comments %}
+    {% if user.id == comment.users_id_id %}
+            <p>{{comment.comment}}</p><a href="/deleteComment/{{comment.id}}">delete comment</a>
+            <button onclick="showUpdates('commentdiv{{comment.id}}')">update comment</button>
+            
+                <div class="commentdiv" id="commentdiv{{comment.id}}" style="display: none;">
+                    <form action="/updatecomment/{{comment.id}}" method="post">
+                        {%csrf_token%}
+                        <input type="hidden" value="{{user.id}}" name="users_id">
+                        <textarea name="comment" value="{{comment}}" cols="15" rows="2">{{comment.comment}}</textarea>
+                        <input type="submit" value="Submit Updated Comment">
+                    </form>
+                </div>
+            {% endif %}
+        {% endfor %}
 {% endblock %}

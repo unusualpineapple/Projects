@@ -8,11 +8,13 @@
         <link rel="stylesheet" href="{% static 'styles.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
         <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+        <script src="{%static 'app.js'%}"></script>
+        <script src="{%static 'index.js'%}"></script>
     <title>Document</title>
 </head>
 <body id="base">
         <header>
-            {{user.firstName}} {{user.lastname}}
+            {{user.firstName}} {{user.lastName}}
             <div><a href="/highscores">Look at Scores</a></div>
             <div><a href="/gamepage">check out the games</a></div>
             <div><a href="/login">dashboard</a></div>

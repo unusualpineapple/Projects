@@ -78,6 +78,7 @@ def index(request):
 def gamepage (request):
     if 'id' not in request.session:
         return redirect("/login")
+    Users.objects.get(id = request.session['id'])
     context = {
         'comments': Comments.objects.all(),
         'games' : Games.objects.all(),
@@ -121,6 +122,7 @@ def subscore(request):
         return render ("highscores.html", Scores)
     
 def highscores(request):
+    user = Users.objects.filter(request.session['id'])
     scoresList = Scores.objects.all().order_by('-scores')
     listofgames = Games.objects.all()
     print(scoresList)
@@ -161,6 +163,12 @@ def deleteFavorite(request, game_id):
     return redirect('/login')
 
 def addComment(request):
+    errors = Comments.objects.validation(request.POST)
+    # errors = Users.logs.loginval(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request,value)
+        return redirect('/login')
     user = Users.objects.get(id = request.session['id'])
     game = Games.objects.get(id = request.POST['games_id'])
     newuserComment = Comments.objects.create(comment=request.POST['comment'], games_id =game, users_id= user )
@@ -168,15 +176,17 @@ def addComment(request):
     return redirect('/login')
 
 
-def deleteComment(request):
+def deleteComment(request, comment_id):
     user = Users.objects.get(id = request.session['id'])
-    comment = Comments.objects.get(id = comment.id)
-    user.usercomments.remove(comment)
+    comment = Comments.objects.get(id = comment_id)
+    # user.usercomments.delete(comment)
+    comment.delete()
     return redirect('/login')
 
-def updatePage(comment_id):
-    updateComment = Comment.objects.get(id = comment_id)
-    updateComment.comment = Comments.objects.get(comment = 'comment')
+def updateComment(request, comment_id):
+    user = Users.objects.get(id = request.session['id'])
+    updateComment = Comments.objects.get(id = comment_id)
+    updateComment.comment = request.POST['comment']
     updateComment.save()
     return redirect("/login")
 

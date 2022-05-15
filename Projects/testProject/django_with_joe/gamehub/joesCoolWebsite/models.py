@@ -1,3 +1,4 @@
+from distutils import errors
 import email
 from django.db import models
 import re
@@ -49,11 +50,20 @@ class Games(models.Model):
     createdat = models.DateTimeField(auto_now_add=True)
     updateddat = models.DateTimeField(auto_now=True)
 
+class CommentsVal(models.Manager):
+    def validation(self, postData):
+        errors = {}
+
+        if len(postData['comment']) == 0 :
+            errors['comment'] = "come on leave a comment"
+        return errors
+
 class Comments(models.Model):
     games_id = models.ForeignKey(Games, on_delete=models.CASCADE, related_name = 'gamecomments')
     users_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='usercomments')
     comment = models.TextField(max_length=225, blank=True)
     timestamp = models.DateTimeField(auto_now=True)
+    objects = CommentsVal()
 class Scores(models.Model):
     games_id = models.ForeignKey(Games, on_delete=models.CASCADE, related_name = 'gamescores')
     users_id = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='userscores')
