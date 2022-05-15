@@ -43,6 +43,8 @@ body {
     height: 100vh;
 }
 
+
+
 /* styling for the highscores */
 .highscorelist{
     background-color: teal;
@@ -67,3 +69,11 @@ body {
     margin: auto;
 }
 
+
+/* tester */
+
+
+div {
+    overflow-x: hidden;
+    overflow-y: auto;
+}

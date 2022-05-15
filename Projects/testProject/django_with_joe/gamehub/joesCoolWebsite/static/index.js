@@ -1,4 +1,6 @@
 var btns = document.querySelectorAll("subresults");
+let objDiv = document.getElementById("divExample");
+objDiv.scrollTop = objDiv.scrollHeight;
     
 for(var i=0; i<btns.length; i++) {
     btns[i].addEventListener("click", function(){
@@ -17,3 +19,15 @@ function showUpdates(update){
         show.style.display = "none"
     }
 }
+
+
+// If you don't know when data comes, you can set an interval:
+window.setInterval(function() {
+    // var elem = document.getElementById('yourDivWithScrollbar');
+    // elem.scrollTop = elem.scrollHeight;
+    // }, 5000);
+    
+  // If you do know when data comes, you can do it like the following:
+    var elem = document.getElementById('yourDivWithScrollbar');
+    elem.scrollTop = elem.scrollHeight;
+})

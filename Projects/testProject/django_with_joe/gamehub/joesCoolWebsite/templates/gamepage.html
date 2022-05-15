@@ -1,14 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-    
-    {% for game in games %}
-    <div><a href="/playgame/{{game.id}}">click to play {{game.name}} <a href="/addfavgame/{{game.id}}">add to favorites</a></a></div>
+{% for game in games %}
+
+    <div><a href="/playgame/{{game.id}}">click to play {{game.name}}</a>
+        {% if user.id == game.id %}
+        <a href="/addfavgame/{{game.id}}" style="display: none">add to favorites</a>
+        {% else %}
+        <a href="/addfavgame/{{game.id}}" >add to favorites</a>
+        
+        {% endif %}
+    </div>
     {% endfor %}
 
     <h2>comments</h2>
-    {% for comment in comments %}
-        <p>{{comment.users_id.firstName}}: {{comment.games_id.name}} {{comment.comment}}</p>
-    {% endfor %}
+    <div class="yourDivWithScrollbar" id="divExample">
+        {% for comment in comments %}
+            <p>{{comment.users_id.firstName}}: {{comment.games_id.name}} {{comment.comment}}</p>
+        {% endfor %}
+    </div>
 
 
 

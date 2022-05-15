@@ -78,11 +78,12 @@ def index(request):
 def gamepage (request):
     if 'id' not in request.session:
         return redirect("/login")
-    Users.objects.get(id = request.session['id'])
+    userlog2 = Users.objects.get(id = request.session['id'])
     context = {
+        # 'faves' : Users.favoritedgames.filter(),
         'comments': Comments.objects.all(),
         'games' : Games.objects.all(),
-        'users': Users.objects.all(),
+        'user': userlog2,
     }
     return render(request,"gamepage.html", context)
 
@@ -93,7 +94,7 @@ def playgame (request, game_id):
         'this_game_id' : Games.objects.get(id = game_id),
         'all' : Scores.objects.all(),
         'user' : userlog2,
-        
+        'comments':Comments.objects.all()
     }
     # {request.session['id']: Users.objects.get(name = firstName)
     return render (request, "rungame.html", context)
@@ -122,7 +123,7 @@ def subscore(request):
         return render ("highscores.html", Scores)
     
 def highscores(request):
-    user = Users.objects.filter(request.session['id'])
+    userlog2 = Users.objects.get(id = request.session['id'])
     scoresList = Scores.objects.all().order_by('-scores')
     listofgames = Games.objects.all()
     print(scoresList)
@@ -146,13 +147,18 @@ def highscores(request):
     #I want to filter the score list to a single game and limit the resilts to 5
     for key, value in scoresViewModelDict.items():
         print(key, value)
-    return render(request, "highscores.html", {'Model': scoresViewModelDict })
+    context = {
+        'user' : userlog2,
+        'Model': scoresViewModelDict
+    }
+    return render(request, "highscores.html", context)
     #add to those 5 scores to the viewmodelDict
     #return the viewmodeldict
 
 def addFavorite(request, game_id):
     user = Users.objects.get(id = request.session['id'])
     game = Games.objects.get(id = game_id)
+    user.save()
     user.favoritedgames.add(game)
     return redirect('/login')
 
