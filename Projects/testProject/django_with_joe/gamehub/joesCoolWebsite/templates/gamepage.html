@@ -1,24 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container2">
-    <div class="gamelist">
-    {% for game in games %}
-        <div class="GF1">
-            <a href="/playgame/{{game.id}}" class="G1">click to play {{game.name}}</a>
-            {% if user not in game.usersthatfav.all %}
-                <a href="/addfavgame/{{game.id}}" class="F1">add to favorites</a>
-            {% endif %}
-        </div>
-    {% endfor %}
-        </div>
-        <div class="CG">
-            <h2>comments</h2>
-            <div class="yourDivWithScrollbar" id="divExample">
-                {% for comment in comments %}
-                    <p>{{comment.users_id.firstName}}: {{comment.games_id.name}} {{comment.comment}}</p>
-                {% endfor %}
+
+        <div class="Gamecon">
+            <h1>Pick and Play</h1>
+            <div class="gamelist">
+                    {% for game in games %}
+                <div class="GF1">
+                    <a href="/playgame/{{game.id}}" class="G1">click to play {{game.name}}</a>
+                    <br>
+                    {% if user not in game.usersthatfav.all %}
+                        <a href="/addfavgame/{{game.id}}" class="F1">favorite</a>
+                    {% endif %}
+                </div>
+                    {% endfor %}
             </div>
         </div>
+        <div class="CHG">
+            <h2>comments</h2>
+            <div class="CG">
+                <div class="yourDivWithScrollbar" id="divExample">
+                    {% for comment in comments %}
+                        <p>{{comment.users_id.firstName}}: {{comment.games_id.name}} {{comment.comment}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
 </div>
 
 
