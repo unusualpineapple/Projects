@@ -13,12 +13,14 @@
     <title>Document</title>
 </head>
 <body id="base">
-        <header>
-            {{user.firstName}} {{user.lastName}}
-            <div><a href="/highscores">Look at Scores</a></div>
-            <div><a href="/gamepage">check out the games</a></div>
-            <div><a href="/login">dashboard</a></div>
-            <div><a href="/logout">logout</a>
+        <header class="navstuff">
+            <h1>{{user.firstName}} {{user.lastName}}</h1>
+            <div class="links">
+                <div><a href="/highscores">Look at Scores</a></div>
+                <div><a href="/gamepage">check out the games</a></div>
+                <div><a href="/login">dashboard</a></div>
+                <div><a href="/logout">logout</a>
+            </div>
         </header>
         {% block content %}
         {% endblock %}

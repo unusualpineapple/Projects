@@ -84,6 +84,7 @@ def gamepage (request):
         'comments': Comments.objects.all(),
         'games' : Games.objects.all(),
         'user': userlog2,
+        'favgames': []
     }
     return render(request,"gamepage.html", context)
 

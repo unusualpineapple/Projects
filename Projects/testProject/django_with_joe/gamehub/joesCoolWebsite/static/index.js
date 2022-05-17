@@ -21,6 +21,9 @@ function showUpdates(update){
 }
 
 
+
+
+
 // If you don't know when data comes, you can set an interval:
 window.setInterval(function() {
     // var elem = document.getElementById('yourDivWithScrollbar');

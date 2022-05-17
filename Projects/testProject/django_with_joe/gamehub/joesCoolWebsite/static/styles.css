@@ -1,15 +1,141 @@
 /* universal styles */
+*{
+    border: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 body {
     background-color: black !important;
+    /* background-color: blue !important; */
     color: red !important;
+    /* display: flex; */
     align-items: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    /* margin-left: auto !important;
+    margin-right: auto !important; */
+    /* margin: 10px 4px 10px 4px !important; */
 }
+
+/* header styling */
+
+.navstuff{
+    display: flex;
+    justify-content: space-between;
+}
+
+.links{
+    display: flex;
+    align-items: center;
+    /* border: 3px white dashed; */
+}
+
+.links>div{
+    margin: 4px;
+    border: 3px white groove;
+}
+
+
+/* login styles */
+
+.loginfull{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10% auto;
+    /* border: 2px purple dashed; */
+    width: 50vw;
+    height: 50vh;
+    background-color: antiquewhite;
+}
+
+.logsform{
+    width: 30%;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: auto;
+    justify-content: center;
+}
+
+/* index-dashboard styles */
+
+.gamecoms{
+    display: flex;
+    margin: 0 auto;
+    width: 1200px;
+    /* background-color: blue; */
+}
+
+.favcolumn{
+    background-color: rgb(147, 212, 154);
+}
+
+.comments{
+    background-color: orangered;
+}
+
+/* styling for the highscores */
+.highscorelist{
+    background-color: rgb(23, 0, 128);
+    display: flex;
+    justify-content: space-around;
+}
+.header{
+    display: block  ;
+    align-items: center;
+}
+.tables{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+/* gamepage */
+
+.container2{
+    display: flex;
+    justify-content: space-around;
+    /* align-items: center; */
+
+}
+
+.gamelist{
+    display: flex;
+    flex-direction: column;
+}
+
+.GF1{
+    border: blue 5px groove;
+}
+
+.G1{
+    color: red
+}
+.F1{
+    color: green;
+
+}
+
+
+.wackycomments{
+    display: flex;
+    /* align-items: center; */
+
+}
+
+.CG{
+    width: 50%
+}
+
+.CBM>.comments{
+background-color: aqua;
+align-items: center;
+width: 50%;
+}
+
+
+
 
 /* this is the styling for wackamole game */
 .grid{
-    width: 40%;
+    width: 60%;
     height: 50%;
     display: flex;
     flex-wrap: wrap;
@@ -27,7 +153,7 @@ body {
 }
 
 .return{
-
+    
     text-decoration: none;
     color: red;
     border: 2px white groove;
@@ -43,32 +169,9 @@ body {
     height: 100vh;
 }
 
-
-
-/* styling for the highscores */
-.highscorelist{
-    background-color: teal;
-    display: flex;
-    justify-content: space-around;
+.wackygame{
+    width: 50%;
 }
-.header{
-    display: block !important ;
-    align-items: center;
-}
-.tables{
-    display:flex;
-    flex-wrap: wrap;
-}
-
-
-/* login styles */
-
-.logsform{
-    align-items: center;
-    flex-wrap: wrap;
-    margin: auto;
-}
-
 
 /* tester */
 
