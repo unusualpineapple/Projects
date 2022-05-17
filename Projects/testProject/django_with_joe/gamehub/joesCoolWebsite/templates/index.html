@@ -1,21 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
+<body class="DBody">
+    
     <div class="gamecoms">
-        <div class="favcolumn">
-            <table>
-                <th>
-                    <td>Fav Games</td>
-                </th>
+        <div class="favcolumn" >
+            <table class="TA">
+                <!-- <th> -->
+                    <td class="TT">Fav Games</td>
+                    <td class="TT">Delete Faves</td>
+                <!-- </th> -->
                 <tb>
                 {% for game in favgame %}
-                    <tr>
-                        <td><a href="playgame/{{game.id}}">{{game.name}}</a></td>
-                        <td><a href="deletefavgame/{{game.id}}">delete from fav</a></td>
-                    </tr>
-                    
-                    
-                    {% endfor %}
-                </tb>
+                <tr>
+                    <td class="TB"><a href="playgame/{{game.id}}">{{game.name}}</a></td>
+                    <td class="TB"><a href="deletefavgame/{{game.id}}">delete from fav</a></td>
+                </tr>
+                {% endfor %}
+            </tb>
             </table>
         </div>
         
@@ -49,21 +50,27 @@
                                 <input type="submit" value="add comment">
                             </form>
                     </div>
-            {% for comment in comments %}
-            {% if user.id == comment.users_id_id %}
-                    <p>{{comment.comment}}</p><a href="/deleteComment/{{comment.id}}">delete comment</a>
-                    <button onclick="showUpdates('commentdiv{{comment.id}}')">update comment</button>
-        
-                        <div class="commentdiv" id="commentdiv{{comment.id}}" style="display: none;">
-                            <form action="/updatecomment/{{comment.id}}" method="post">
-                                {%csrf_token%}
-                                <input type="hidden" value="{{user.id}}" name="users_id">
-                                <textarea name="comment" value="{{comment}}" cols="15" rows="2">{{comment.comment}}</textarea>
-                                <input type="submit" value="Submit Updated Comment">
-                            </form>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+            <div class="Thislooksfun">
+                {% for comment in comments %}
+                {% if user.id == comment.users_id_id %}
+                        <p>{{comment.comment}}</p><a href="/deleteComment/{{comment.id}}" class="deleteme">delete comment</a>
+                        <button onclick="showUpdates('commentdiv{{comment.id}}')" class="UPBut">update comment</button>
+                            <div class="commentdiv" id="commentdiv{{comment.id}}" style="display: none;">
+                                <form action="/updatecomment/{{comment.id}}" method="post">
+                                    {%csrf_token%}
+                                    <div class="ComUp">
+                                        <input type="hidden" value="{{user.id}}" name="users_id">
+                                        <textarea name="comment" value="{{comment}}" cols="15" rows="2">{{comment.comment}}</textarea>
+                                        <input type="submit" value="Submit Updated Comment">
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+            </div>
         </div>
     </div>
+
+</body>
+    
 {% endblock %}

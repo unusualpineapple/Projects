@@ -1,39 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="background">
-            <h1>HIGH SCORES</h1>
-            <div class="highscorelist">
-                    {% for key, value in Model.items%}
-                <div class="tables">
-                    <h1 class="header">{{key}}</h1>
-                    <table class="tables">
-                        <tr>
-                            <th>
-                                Name
-                            <th>
-                                Score
-                            </th>
-                            <th>
-                                TimeStamp
-                            </th>
-                        </tr>
-                        {% for score in value %}
-                        <tr>
-                            <td>
-                                {{score.userName}}
-                            </td>
-                            <td>
-                                {{score.score}}
-                            </td>
-                            <td>
-                                {{score.timestamp}}
-                            </td>
-                        </tr>
+<body class="BGHigh">
+    <div class="BGHigh">
+                <h1 class="THigh">HIGH SCORES</h1>
+                <div class="highscorelist">
+                        {% for key, value in Model.items%}
+                    <div class="tables">
+                        <h1 class="header">{{key}}</h1>
+                        <table class="tables">
+                            <tr>
+                                <th>
+                                    Name
+                                <th>
+                                    Score
+                                </th>
+                                <th>
+                                    TimeStamp
+                                </th>
+                            </tr>
+                            {% for score in value %}
+                            <tr>
+                                <td>
+                                    {{score.userName}}
+                                </td>
+                                <td>
+                                    {{score.score}}
+                                </td>
+                                <td>
+                                    {{score.timestamp}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                         {% endfor %}
-                    </table>
                 </div>
-                    {% endfor %}
             </div>
-        </div>
-        
+            
+</body>
 {% endblock %}

@@ -10,25 +10,27 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
     <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
 
-    <title>Whack that MOLEEEEE</title>
+    <title>the game</title>
 
 </head>
 
-<body>
+<body class="BGgame">
 
-    
-    <header>
-        {{user.firstName}} {{user.lastname}}
-        <div><a href="/highscores">Look at Scores</a></div>
-        <div><a href="/gamepage">check out the games</a></div>
-        <div><a href="/login">dashboard</a></div>
-        <div><a href="/logout">logout</a>
-    </header>
-        
+    <div class="HeadColo">
+        <header class="navstuff">
+            <h1>{{user.firstName}} {{user.lastName}}</h1>
+            <div class="links">
+                <div><a href="/highscores">Look at Scores</a></div>
+                <div><a href="/gamepage">check out the games</a></div>
+                <div><a href="/login">dashboard</a></div>
+                <div><a href="/logout">logout</a>
+            </div>
+        </header>
+    </div>
 
             <div class="wackycomments">
                 <div class="wackygame">
-                    <form action="/insertscore" method="post">
+                    <form action="/insertscore" method="post" class="WackScore">
                         {%csrf_token%}
                         <input type="hidden" name="games_id" value="{{this_game_id.id}}">
                         <!-- <input type="hidden" name="user.id" value="{{user.id}}"> -->
@@ -40,18 +42,20 @@
                         <p class="timesup"></p>
                         <input type="submit" value="submit the score">
                     </form>
-                    <button class="start" onclick="StartGame()">click to start</button>
-                    <a href="/playgame/{{this_game_id.id}}">restart game</a>
-                    <div class="grid">
-                        <div class="square" id="1"></div>
-                        <div class="square" id="2"></div>
-                        <div class="square" id="3"></div>
-                        <div class="square" id="4"></div>
-                        <div class="square" id="5"></div>
-                        <div class="square" id="6"></div>
-                        <div class="square" id="7"></div>
-                        <div class="square" id="8"></div>
-                        <div class="square" id="9"></div>
+                    <div class="GamePlay">
+                        <button class="start" onclick="StartGame()">click to start</button>
+                        <a href="/playgame/{{this_game_id.id}}">restart game</a>
+                        <div class="grid">
+                            <div class="square" id="1"></div>
+                            <div class="square" id="2"></div>
+                            <div class="square" id="3"></div>
+                            <div class="square" id="4"></div>
+                            <div class="square" id="5"></div>
+                            <div class="square" id="6"></div>
+                            <div class="square" id="7"></div>
+                            <div class="square" id="8"></div>
+                            <div class="square" id="9"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="CBM">
